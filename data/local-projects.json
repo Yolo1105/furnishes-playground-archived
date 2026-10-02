@@ -1,0 +1,680 @@
+{
+  "projects": [
+    {
+      "id": "995c7723-8863-46e4-a830-183d0d194677",
+      "name": "Demo apartment",
+      "updated": "2026-10-02T19:36:45.975Z",
+      "updatedAt": 1790969805975,
+      "revision": 11,
+      "snapshot": {
+        "schemaVersion": "3.5.0",
+        "id": "995c7723-8863-46e4-a830-183d0d194677",
+        "name": "Demo apartment",
+        "createdAt": 1790969805951,
+        "updatedAt": 1790969805951,
+        "sceneSource": "viewer",
+        "items": [
+          {
+            "id": "4_bathroom_box",
+            "x": 2.464755650544761,
+            "z": 0.5376759983209146,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "4_bathroom_faucet",
+            "x": 4.2788580415423105,
+            "z": -0.5305168908783262,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "4_bathroom_flush",
+            "x": 4.310974411412975,
+            "z": 0.6912319768254762,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "4_bathroom_grid",
+            "x": 1.920682150434181,
+            "z": 0.37678291427555716,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "4_bathroom_mirror",
+            "x": 4.566617276054686,
+            "z": -0.530523101682469,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "4_bathroom_paper",
+            "x": 4.528566794333319,
+            "z": 0.2984084798103358,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "4_bathroom_shelf",
+            "x": 4.467814334140007,
+            "z": 0.6912323794591093,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "4_bathroom_shower",
+            "x": 1.946736144486191,
+            "z": 0.2173061814884481,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "4_bathroom_soap",
+            "x": 4.417000437412166,
+            "z": -1.0681310288482302,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "4_bathroom_towel",
+            "x": 3.518464231412479,
+            "z": 1.1565641412008878,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "4_bedroom_abajour",
+            "x": 4.262562217029297,
+            "z": -3.9730815130859716,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "4_closet_mirror",
+            "x": 2.595137937376247,
+            "z": -2.3677345027962247,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "4_glass",
+            "x": -0.03031434029971458,
+            "z": -7.846248571156785,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "4_kitchen_cooktop",
+            "x": -2.71102505239957,
+            "z": -0.534350853786812,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "4_kitchen_freezer",
+            "x": -1.1638026426338144,
+            "z": 0.715649093107102,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "4_kitchen_handle_06",
+            "x": -1.7509552452127362,
+            "z": -0.9190730857548075,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "4_kitchen_microwave",
+            "x": -2.8415806112623554,
+            "z": -0.5343509385578644,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "4_kitchen_oven",
+            "x": -2.6499138409730176,
+            "z": -0.5343508659288604,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "4_kitchen_sink",
+            "x": -2.6832471043760213,
+            "z": -1.4093508759522884,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "4_kitchen_washmachine",
+            "x": -2.708245918214586,
+            "z": -2.281573035498568,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "4_kithchen_faucet",
+            "x": -2.8888028346808095,
+            "z": -1.4412555860996394,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "4_lamp_pedestal",
+            "x": -2.5329914569520318,
+            "z": -4.6417484667319595,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "4_tv",
+            "x": 0.4682714236520268,
+            "z": -5.728228904872962,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "5_vegetation_plant",
+            "x": 0.3329359350832294,
+            "z": -7.081293635032619,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "6_hqi_pictures",
+            "x": 0.9812783224939594,
+            "z": -0.023801674750401278,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_books_00",
+            "x": 1.0526497401655355,
+            "z": -6.7323471559423425,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_books_01",
+            "x": 1.052649739626986,
+            "z": -6.617773509750705,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_books_02",
+            "x": 1.0072300880502862,
+            "z": -6.430215474271598,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_books_03",
+            "x": 1.0072301344094567,
+            "z": -6.430215485861385,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_books_04",
+            "x": 0.9474309526797486,
+            "z": -5.134012482181756,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_books_05",
+            "x": 0.9413600081900517,
+            "z": -5.370079385948124,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_books_06",
+            "x": 0.947430971331356,
+            "z": -5.169022492779947,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_books_07",
+            "x": 0.9413601045168063,
+            "z": -5.370079222192675,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_books_08",
+            "x": 1.0526511870920745,
+            "z": -6.656540937537932,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_books_09",
+            "x": 0.9474309546112579,
+            "z": -5.1944730506826104,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_books_10",
+            "x": 0.9858203085358517,
+            "z": -6.043535935474372,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_books_11",
+            "x": 0.9970325530338345,
+            "z": -6.112456659730535,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_books_12",
+            "x": 0.9413601617321494,
+            "z": -5.370079682231177,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_books_13",
+            "x": 0.9474309153234051,
+            "z": -5.062432753945155,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_books_14",
+            "x": 1.0526511565779226,
+            "z": -6.677726845040802,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_books_15",
+            "x": 1.0072301795134977,
+            "z": -6.430215316981551,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_books_16",
+            "x": 1.052651156371329,
+            "z": -6.699801487609642,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_books_17",
+            "x": 1.0526511870104167,
+            "z": -6.6410527107101505,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_books_18",
+            "x": 0.9474323087186065,
+            "z": -5.099753491273864,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_books_19",
+            "x": 1.0072301344094567,
+            "z": -6.430215485861385,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_books_20",
+            "x": 0.9413601623128491,
+            "z": -5.370079231825353,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_books_21",
+            "x": 1.0018075137132636,
+            "z": -5.2545957412906965,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_chocolate_pot",
+            "x": -2.8167786411058744,
+            "z": 1.1194173460653827,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_coffee_pot",
+            "x": -2.654839312730628,
+            "z": 1.1308979744757843,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_cup",
+            "x": -2.20487981769918,
+            "z": 0.7516452714803683,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_dinner",
+            "x": -1.1797467331772928,
+            "z": -1.6603128998414598,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_knifes",
+            "x": -2.8982422585045713,
+            "z": 0.319444111504141,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_magazines",
+            "x": -1.0854064761899709,
+            "z": -5.650107242870259,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_statuette",
+            "x": 1.0426529399378197,
+            "z": -5.999522717412136,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_sugar_pot",
+            "x": -2.983656222373143,
+            "z": 1.1177677861548896,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_tablet",
+            "x": 4.092872553767339,
+            "z": -7.032158923798177,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_teapot",
+            "x": -2.868728691581487,
+            "z": -0.7582843165584874,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_vase_00",
+            "x": 0.9551765736704145,
+            "z": -7.036685104604027,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          },
+          {
+            "id": "7_vase_01",
+            "x": 0.9173804627837132,
+            "z": -7.219690887234714,
+            "rotation": 0,
+            "placed": true,
+            "visible": true,
+            "locked": false
+          }
+        ],
+        "furnitureFull": [],
+        "roomMeta": null,
+        "walls": [],
+        "openings": [],
+        "styleBible": null,
+        "originalScene": null,
+        "referenceImageUrl": null,
+        "requirements": {
+          "presetName": null,
+          "mustInclude": {
+            "bed": true,
+            "desk": true,
+            "wardrobe": true
+          },
+          "optionalInclude": {
+            "rug": false,
+            "nightstand": false,
+            "lamp": false
+          },
+          "walkwayMinCm": 75,
+          "doorClearance": true,
+          "windowAccess": true,
+          "bedAgainstWall": "prefer",
+          "flowVsStorage": 50,
+          "opennessVsCozy": 50
+        },
+        "conversations": [
+          {
+            "id": "convo_murd6h63_4nf44u",
+            "projectId": "995c7723-8863-46e4-a830-183d0d194677",
+            "title": "Conversation 1",
+            "turns": [],
+            "createdAt": 1790969804139,
+            "updatedAt": 1790969804139
+          }
+        ],
+        "activeConversationId": "convo_murd6h63_4nf44u",
+        "preferences": [],
+        "generations": {
+          "candidates": [],
+          "appliedIndex": null,
+          "inspectIndex": null,
+          "history": [],
+          "assetGenerations": []
+        },
+        "profile": null
+      }
+    },
+    {
+      "id": "99fb722f-8c80-4569-b85f-76c60aaa0c05",
+      "name": "New Project 1",
+      "updated": "2026-10-02T19:30:20.084Z",
+      "updatedAt": 1790969420084,
+      "revision": 212,
+      "snapshot": {
+        "schemaVersion": "3.5.0",
+        "id": "99fb722f-8c80-4569-b85f-76c60aaa0c05",
+        "name": "New Project 1",
+        "createdAt": 1790969420071,
+        "updatedAt": 1790969420071,
+        "sceneSource": "room-director",
+        "items": [],
+        "furnitureFull": [],
+        "roomMeta": {
+          "width": 0.8,
+          "depth": 0.4,
+          "height": 2,
+          "minX": 0,
+          "maxX": 0.8,
+          "minZ": 0,
+          "maxZ": 0.4,
+          "minY": 0,
+          "maxY": 2
+        },
+        "walls": [],
+        "openings": [],
+        "styleBible": null,
+        "originalScene": null,
+        "referenceImageUrl": null,
+        "requirements": {
+          "presetName": null,
+          "mustInclude": {
+            "bed": true,
+            "desk": true,
+            "wardrobe": true
+          },
+          "optionalInclude": {
+            "rug": false,
+            "nightstand": false,
+            "lamp": false
+          },
+          "walkwayMinCm": 75,
+          "doorClearance": true,
+          "windowAccess": true,
+          "bedAgainstWall": "prefer",
+          "flowVsStorage": 50,
+          "opennessVsCozy": 50
+        },
+        "conversations": [
+          {
+            "id": "convo_murcy858_seed",
+            "projectId": "99fb722f-8c80-4569-b85f-76c60aaa0c05",
+            "title": "Conversation 1",
+            "turns": [],
+            "createdAt": 1790969419196,
+            "updatedAt": 1790969419196
+          }
+        ],
+        "activeConversationId": "convo_murcy858_seed",
+        "preferences": [],
+        "generations": {
+          "candidates": [],
+          "appliedIndex": null,
+          "inspectIndex": null,
+          "history": [],
+          "assetGenerations": []
+        },
+        "profile": null
+      },
+      "blankScene": true
+    },
+    {
+      "id": "b5384af9-fd0d-4df5-9376-8f39e7904826",
+      "name": "New Project 1",
+      "updated": "2026-07-22T17:24:32.232Z",
+      "updatedAt": 1784741072232,
+      "revision": 0,
+      "snapshot": null,
+      "blankScene": true
+    }
+  ]
+}

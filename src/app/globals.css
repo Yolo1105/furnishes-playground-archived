@@ -1,0 +1,660 @@
+@import "tailwindcss";
+
+@source "../**/*.{ts,tsx}";
+
+@theme {
+  --color-cream: #fff4ec;
+  --color-accent: #ff5a1f;
+  --color-ink: #1a1a1a;
+}
+
+/* ─── Reset / page setup ─────────────────────────────────────────────────
+ * The JSX shell is a fixed-viewport app — no page scroll, no overscroll
+ * bounce. The 3D canvas fills the viewport; chat and modal float on top.
+ * ──────────────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+  /* Paint cream before WebGL mounts so the first frame is not
+     the browser default white. Matches the body gradient start. */
+  background-color: #fff4e3;
+}
+
+/* ─── Font variables ─────────────────────────────────────────────────────
+ * --font-syne is set by next/font (see layout.tsx) to a class that
+ * resolves to the Syne font. We add --font-app here as an alias —
+ * resolving the variable at CSS-cascade level lets future tweaks
+ * (different fallbacks, weight limits, etc.) live in one place
+ * instead of every component that reads it.
+ * ──────────────────────────────────────────────────────────────────────── */
+:root {
+  --font-app: var(--font-syne);
+}
+
+body {
+  /* Static base layer underneath the animated blobs. Provides the
+   * warm cream-to-peach character that's always present even when
+   * the animated blobs drift to one corner. The blobs (defined in
+   * body::before / body::after / .bg-blob) sit on top with mix-blend
+   * + blur to read as a slow-fluid wash.
+   */
+  background: linear-gradient(135deg, #fff4e3 0%, #ffd1ad 55%, #f8b78a 100%);
+  background-attachment: fixed;
+  color: #1a1a1a;
+  /* The body itself is a positioned containing block for the
+   * absolute-positioned blob pseudo-elements. The actual studio
+   * shell uses `position: fixed` for its cards, which is unaffected
+   * by the body being position: relative. */
+  position: relative;
+}
+
+/* ─── Fluid background blobs ─────────────────────────────────────────────
+ * Three softly-blurred radial blobs drift across the viewport on
+ * independent loops. Their durations are deliberately mismatched
+ * (29s / 41s / 53s) so the blobs never sync — the composite never
+ * repeats, even though each blob individually does. The result reads
+ * as fluid, organic motion rather than a deterministic sweep.
+ *
+ * Each blob is its own absolute-positioned element with:
+ *   - A radial-gradient fill (warm cream/peach with transparent edges)
+ *   - filter: blur(80px) — softens the edges so blobs blend into the
+ *     base gradient instead of looking like distinct shapes
+ *   - mix-blend-mode: normal — keeps the blobs additive over the base
+ *     without darkening on overlap
+ *   - Its own @keyframes loop translating the blob across an
+ *     irregular path (not corner-to-corner).
+ *
+ * The blob layer sits at z-index: 0, behind every studio surface
+ * (which start at z-index >= 1) so it never blocks interaction.
+ * `pointer-events: none` is unnecessary because nothing in the body
+ * underlay receives events anyway, but it's defensive — guarantees
+ * the blobs never interfere with the 3D canvas's pointer.
+ *
+ * Performance: three full-viewport blurred elements + three transform
+ * animations cost ~1ms per frame on a modern machine. The 80px blur
+ * is rendered once per blob into a compositor layer (transform-only
+ * animations don't re-rasterize), so animation is GPU-accelerated.
+ *
+ * Accessibility: prefers-reduced-motion: reduce hides the blobs
+ * entirely, leaving the base linear gradient unanimated.
+ */
+.bg-fluid {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bg-fluid .bg-blob {
+  position: absolute;
+  /* 90% × 90% so each blob is huge — the whole point is for them to
+   * drift PARTIALLY off-screen, with most of the visible area
+   * showing the blob's transparent-edge falloff. */
+  width: 90vmax;
+  height: 90vmax;
+  border-radius: 50%;
+  filter: blur(80px);
+  /* will-change tells the browser these layers will be transformed,
+   * so it promotes them to compositor layers up front. Without this,
+   * the first frame of animation would re-rasterize the blur. */
+  will-change: transform;
+}
+
+.bg-fluid .bg-blob-1 {
+  background: radial-gradient(
+    circle,
+    rgba(255, 232, 200, 0.85) 0%,
+    rgba(255, 232, 200, 0) 60%
+  );
+  top: -20%;
+  left: -25%;
+  animation: blob-drift-1 29s ease-in-out infinite;
+}
+
+.bg-fluid .bg-blob-2 {
+  background: radial-gradient(
+    circle,
+    rgba(255, 198, 156, 0.7) 0%,
+    rgba(255, 198, 156, 0) 60%
+  );
+  top: -10%;
+  right: -30%;
+  animation: blob-drift-2 41s ease-in-out infinite;
+}
+
+.bg-fluid .bg-blob-3 {
+  background: radial-gradient(
+    circle,
+    rgba(255, 248, 235, 0.9) 0%,
+    rgba(255, 248, 235, 0) 60%
+  );
+  bottom: -25%;
+  left: 10%;
+  animation: blob-drift-3 53s ease-in-out infinite;
+}
+
+/* Each blob animates on a different irregular path — values picked
+ * to read as random rather than circular. Translate-only animations
+ * are cheap (no layer re-rasterization). Keyframes use 5 stops at
+ * non-aligned percentages so the path isn't visibly periodic. */
+@keyframes blob-drift-1 {
+  0%   { transform: translate(0, 0); }
+  22%  { transform: translate(35vmax, 18vmax); }
+  47%  { transform: translate(20vmax, 40vmax); }
+  71%  { transform: translate(-12vmax, 28vmax); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes blob-drift-2 {
+  0%   { transform: translate(0, 0); }
+  19%  { transform: translate(-28vmax, 22vmax); }
+  43%  { transform: translate(-45vmax, -8vmax); }
+  68%  { transform: translate(-14vmax, 35vmax); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes blob-drift-3 {
+  0%   { transform: translate(0, 0); }
+  27%  { transform: translate(28vmax, -32vmax); }
+  54%  { transform: translate(45vmax, 8vmax); }
+  79%  { transform: translate(8vmax, -22vmax); }
+  100% { transform: translate(0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-fluid {
+    display: none;
+  }
+}
+
+/* ─── Glass surfaces ─────────────────────────────────────────────────────
+ * Two tiers used throughout the app:
+ *   .glass        — floating tool cards / panels (original denser cream)
+ *   .glass-chat   — chat input / bubbles
+ *   .glass-popover / .glass-modal — denser, for menus & dialogs
+ *
+ * CAD grid transparency lives on CadWorkplane itself — do not thin
+ * .glass to "see through" tabs; that washed out tool-row colors.
+ * ──────────────────────────────────────────────────────────────────────── */
+.glass {
+  background: rgba(255, 250, 244, 0.55);
+  border: 1px solid rgba(124, 80, 50, 0.18);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.6) inset,
+    0 8px 24px -14px rgba(124, 80, 50, 0.12);
+}
+
+/* Chat — same family as floating cards. */
+.glass-chat {
+  background: rgba(255, 250, 244, 0.55);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+}
+
+/* Dropdown / anchored menus — denser surface than floating cards so
+ * menu rows stay readable over the 3D canvas and top bar. */
+.glass-popover {
+  background: rgba(255, 250, 244, 0.94);
+  border: 1px solid rgba(124, 80, 50, 0.2);
+  backdrop-filter: blur(18px) saturate(1.25);
+  -webkit-backdrop-filter: blur(18px) saturate(1.25);
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.7) inset,
+    0 14px 36px -14px rgba(26, 18, 10, 0.32);
+}
+
+.glass-modal {
+  background: rgba(255, 250, 244, 0.85);
+  border: 1px solid rgba(124, 80, 50, 0.22);
+  backdrop-filter: blur(24px) saturate(1.3);
+  -webkit-backdrop-filter: blur(24px) saturate(1.3);
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.7) inset,
+    0 24px 60px -20px rgba(26, 18, 10, 0.3);
+}
+
+/* ─── Hover treatments ───────────────────────────────────────────────────
+ * Kept as plain CSS rather than Tailwind variants so the hover state
+ * picks up the precise rgba values from the JSX without round-trip
+ * encoding through arbitrary-value classes.
+ * ──────────────────────────────────────────────────────────────────────── */
+.icon-btn:hover {
+  background: rgba(26, 26, 26, 0.05);
+  color: #1a1a1a;
+}
+
+.suggestion-chip:hover {
+  background: rgba(255, 90, 31, 0.08);
+  color: #ff5a1f;
+  border-color: rgba(255, 90, 31, 0.35);
+}
+
+.mode-btn:hover {
+  background: rgba(26, 26, 26, 0.05);
+}
+
+.menu-row:hover {
+  background: #fff4ec;
+}
+
+.send-btn-enabled:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px -4px rgba(255, 90, 31, 0.5);
+}
+
+.mic-btn:hover {
+  background: rgba(26, 26, 26, 0.1);
+  color: #1a1a1a;
+}
+
+.conversation-bubble:hover {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(124, 80, 50, 0.3);
+}
+
+.bubble-hide:hover {
+  color: rgba(26, 26, 26, 0.7);
+  background: rgba(26, 26, 26, 0.05);
+}
+
+.ref-dropzone:hover,
+.ref-dropzone[data-dragging="true"] {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(255, 90, 31, 0.45);
+}
+
+.ref-thumb:hover .ref-thumb-remove {
+  opacity: 1 !important;
+}
+
+.ref-thumb-add:hover {
+  background: rgba(255, 90, 31, 0.06);
+  border-color: rgba(255, 90, 31, 0.45);
+  color: rgba(255, 90, 31, 0.9);
+}
+
+/* Project card hover treatments — match the JSX prototype exactly.
+ * The card uses subtle neutral hovers, not accent colors, which keeps
+ * the brand area calm and lets the dropdown's accent "See all" link
+ * stand out as the primary action. */
+.project-name:hover {
+  background: rgba(26, 26, 26, 0.06);
+  color: #1a1a1a;
+}
+
+.project-caret:hover {
+  background: rgba(26, 26, 26, 0.06);
+  color: #1a1a1a;
+}
+
+/* Floating cards: ease top/left so CAD edge-nudges animate. Drag
+ * kills the transition via [data-dragging="true"] below. */
+[data-card-id] {
+  transition:
+    top 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    left 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* While a floating card is being dragged, kill layout transitions so
+ * top/left track the cursor 1:1 instead of lag-easing (Inventory felt
+ * especially bad with transition: top/left 0.18s). */
+[data-dragging="true"] {
+  transition: none !important;
+}
+
+.project-menu-row:hover {
+  background: rgba(26, 26, 26, 0.05);
+}
+
+/* ─── Top bar ──────────────────────────────────────────────────────
+ * Icon buttons in the top-center toolbar. The base button is neutral;
+ * `:hover` darkens the icon slightly. Disabled buttons stay at base
+ * with reduced opacity and no hover treatment.
+ *
+ * The active state (`data-active="true"`) is styled inline in the
+ * component because it carries the accent color, which we want to
+ * track with the brand token rather than encode in a class.
+ * ─────────────────────────────────────────────────────────────────── */
+.topbar-btn:not(:disabled):hover {
+  background: rgba(26, 26, 26, 0.06);
+  color: #1a1a1a;
+}
+
+.topbar-btn[data-active="true"]:hover {
+  background: rgba(255, 90, 31, 0.1);
+}
+
+.topbar-menu-row:hover {
+  background: rgba(26, 26, 26, 0.05);
+}
+
+.topbar-planner-btn:hover {
+  background: #e64a16;
+  box-shadow: 0 6px 16px -4px rgba(255, 90, 31, 0.45);
+}
+
+/* ─── Scrollbar hiding utility ─────────────────────────────────────
+ * Opt-in: add `className="no-scrollbar"` to any scroll container that
+ * should keep scroll behavior but not show its scrollbar. Used on the
+ * Inventory list, the Catalog grid, and the Catalog category pills.
+ * ─────────────────────────────────────────────────────────────────── */
+.no-scrollbar {
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* IE 10+ / old Edge */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;                /* Chrome, Safari, modern Edge */
+}
+
+/* ─── Tools card ───────────────────────────────────────────────────
+ * Hover treatments for the Tools card's chevron-collapse button and
+ * its tool-row pills. Active tool rows (i.e. their floating card is
+ * open) get an accent background that we set inline; the hover here
+ * is the *non-active* hover.
+ * ─────────────────────────────────────────────────────────────────── */
+.tools-chevron:hover {
+  background: rgba(26, 26, 26, 0.06);
+  color: #1a1a1a;
+}
+
+.tools-collapsed-pill:hover {
+  background: rgba(255, 255, 255, 0.75);
+  border-color: rgba(124, 80, 50, 0.3);
+}
+
+.tool-tile:not([data-active="true"]):hover {
+  background: rgba(26, 26, 26, 0.05);
+  color: rgba(26, 26, 26, 0.85);
+}
+
+.tool-tile[data-active="true"]:hover {
+  background: rgba(255, 90, 31, 0.14);
+}
+
+/* ─── Inventory rows ───────────────────────────────────────────────
+ * On row hover, the price fades out and the trash button slides into
+ * its slot. The "active" (selected) row's hover gets a slightly
+ * stronger accent fill.
+ *
+ * NOTE: `.inventory-delete` MUST set `opacity: 0` + `pointer-events:
+ * none` here in CSS rather than inline on the JSX, because inline
+ * styles win over CSS without `!important`. Putting the base state
+ * in CSS lets the `:hover` rule below override cleanly.
+ * ─────────────────────────────────────────────────────────────────── */
+.inventory-row:hover {
+  background: rgba(26, 26, 26, 0.04);
+}
+
+.inventory-row[data-active="true"]:hover {
+  background: rgba(255, 90, 31, 0.12);
+}
+
+.inventory-row:hover .inventory-price {
+  opacity: 0;
+}
+
+/* Draft panel size — keep visible on hover (no delete affordance). */
+.inventory-dims {
+  opacity: 1;
+}
+
+.inventory-delete {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.inventory-row:hover .inventory-delete {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.inventory-delete:hover {
+  background: rgba(180, 50, 30, 0.1);
+}
+
+/* Custom tooltip for the bubble's hide button — shown on hover via ::after. */
+.bubble-hide {
+  position: relative;
+}
+
+.bubble-hide::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: 28px;
+  right: 0;
+  padding: 5px 9px;
+  background: rgba(26, 26, 26, 0.92);
+  color: #fff4ec;
+  border-radius: 6px;
+  font-family: var(--font-syne), sans-serif;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-2px);
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.bubble-hide:hover::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── Form field polish ─────────────────────────────────────────────────── */
+.chat-textarea::placeholder,
+.guided-input::placeholder,
+.notes-textarea::placeholder {
+  color: rgba(26, 26, 26, 0.35);
+}
+
+.chat-textarea,
+.notes-textarea {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(26, 26, 26, 0.2) transparent;
+}
+
+.guided-input:focus,
+.notes-textarea:focus,
+.chat-textarea:focus {
+  outline: none;
+}
+
+/* ─── Animations ────────────────────────────────────────────────────────
+ * Ported verbatim from the JSX so the motion language stays identical.
+ * cubic-bezier(0.22, 1, 0.36, 1) is reused everywhere — a soft-spring
+ * easing that gives entrances their characteristic settle.
+ * ──────────────────────────────────────────────────────────────────────── */
+@keyframes thinking-line-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+    max-height: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 28px;
+  }
+}
+
+@keyframes thinking-icon-pulse {
+  0%,
+  100% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+/* v0.40.26: gentle fade-in for the pinned user-message echo line.
+ * No translateY — this line stays put while the thinking lines
+ * below it stream/fade. */
+@keyframes thinking-userecho-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes dots-blink {
+  0%,
+  20% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}
+
+@keyframes guided-row-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bubble-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes bubble-expand-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.thinking-line {
+  animation: thinking-line-in 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* v0.40.26: latest line's icon used to be orange (#FF5A1F) so both
+ * the icon AND the trailing dots were orange — visually doubled. The
+ * user asked for ONE accent only. We keep the orange on the trailing
+ * dots (they blink, which carries the "live" signal more strongly)
+ * and let the icon stay neutral on every line, latest or older.
+ * The icon still pulses on the latest line to mark "this is the
+ * active step" — just in neutral color, not orange. */
+.thinking-line:last-child .thinking-icon {
+  animation: thinking-icon-pulse 1.3s ease-in-out infinite;
+}
+
+.thinking-line:last-child .thinking-dots span:nth-child(1) {
+  animation: dots-blink 1.2s ease-in-out infinite;
+}
+.thinking-line:last-child .thinking-dots span:nth-child(2) {
+  animation: dots-blink 1.2s ease-in-out infinite;
+  animation-delay: 0.2s;
+}
+.thinking-line:last-child .thinking-dots span:nth-child(3) {
+  animation: dots-blink 1.2s ease-in-out infinite;
+  animation-delay: 0.4s;
+}
+
+.guided-row {
+  animation: guided-row-in 0.3s ease;
+}
+
+/* ─── Focus rings ─────────────────────────────────────────────
+   Replace browsers' default blue focus ring with our brand
+   orange. Applied to all buttons + interactive surfaces so that
+   keyboard navigation is visible without looking like an
+   accessibility tester forgot to theme it.
+   :focus-visible (vs :focus) means mouse-clicks don't get rings
+   — only keyboard tab navigation does. */
+*:focus {
+  outline: none;
+}
+button:focus-visible,
+[role="button"]:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #FF5A1F;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Tour-mode progress dot pulse. */
+@keyframes tour-pulse {
+  0%, 100% { opacity: 1;   transform: scale(1); }
+  50%      { opacity: 0.5; transform: scale(1.35); }
+}
+
+/* Planner workspace modal fade-in. Subtle ease-out so the modal
+   feels grounded rather than slamming into existence. */
+@keyframes planner-fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Generic spinner — used by the Options tab generate state. */
+@keyframes spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Walk path marker pulsing halo — gentle scale + opacity ripple,
+   keyed via CSS so the SVG element doesn't need per-frame react
+   updates. The marker position itself updates via tourProgress
+   (10 Hz writes from TourCamera). */
+.walk-marker-halo {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: walk-marker-halo-pulse 1.4s ease-in-out infinite;
+}
+@keyframes walk-marker-halo-pulse {
+  0%, 100% { opacity: 0.18; transform: scale(1);    }
+  50%      { opacity: 0.32; transform: scale(1.25); }
+}
+
+/* Properties card entrance — slide in from the right edge. */
+@keyframes properties-card-in {
+  0%   { opacity: 0; transform: translateX(8px); }
+  100% { opacity: 1; transform: translateX(0); }
+}

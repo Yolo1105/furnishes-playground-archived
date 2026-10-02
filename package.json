@@ -1,0 +1,43 @@
+{
+  "name": "furnishes-playground-standalone",
+  "version": "0.40.50-standalone",
+  "private": true,
+  "description": "Standalone Furnishes Studio playground — prod UI/lib + full generation/chat/projects backend. Extracted from furnishes_prod with adapted local APIs (no Postgres/NextAuth required).",
+  "engines": {
+    "node": ">=24.0.0",
+    "npm": ">=10"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "prebuild": "eslint --quiet ."
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.7.8",
+    "@react-three/fiber": "^9.7.0",
+    "next": "16.3.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "server-only": "0.0.1",
+    "three": "^0.185.0",
+    "zod": "^4.4.3",
+    "zustand": "^5.0.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^24",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/three": "^0.185.0",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.1",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5",
+    "vitest": "^4.1.10"
+  }
+}
